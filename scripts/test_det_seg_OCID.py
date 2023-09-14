@@ -63,7 +63,6 @@ def Rotate2D(pts, cnt, ang):
 
 
 def save_prediction_image(raw_pred, img_abs_path, img_root_path, im_size, out_dir):
-
     num_classes_theta = 18
     # grasp candidate confidence threshold
     threshold = 0.06
@@ -82,8 +81,11 @@ def save_prediction_image(raw_pred, img_abs_path, img_root_path, im_size, out_di
         seg_mask_vis = np.zeros((im_size_[0], im_size_[1], 3))
         cls_labels = np.unique(sem_pred)
 
-        img_path = os.path.join(img_root_path[i], seq_path, 'rgb', im_name)
-        mask_path = os.path.join(img_root_path[i], seq_path, 'seg_mask_labeled_combi', im_name)
+        img_path = os.path.join(seq_path, 'rgb', im_name)
+        mask_path = os.path.join(seq_path, 'seg_mask_labeled_combi', im_name)
+
+        print('seq path=', seq_path)
+
         img = cv2.imread(img_path)
         img_best_boxes = np.copy(img)
         mask_gt = cv2.imread(mask_path, cv2.IMREAD_UNCHANGED)
@@ -110,7 +112,7 @@ def save_prediction_image(raw_pred, img_abs_path, img_root_path, im_size, out_di
         if bbx_pred is None:
             continue
 
-        anno_per_class_dir = os.path.join(os.path.join(img_root_path[i], seq_path, 'Annotations_per_class',
+        anno_per_class_dir = os.path.join(os.path.join(seq_path, 'Annotations_per_class',
                                                        im_name[:-4]))
 
         for class_dir in os.listdir(anno_per_class_dir):
