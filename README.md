@@ -31,23 +31,23 @@ If you use our method or dataset extension for your research, please cite:
 - **modified by xiang**
   The environment in the original repo seems to be too old for me. My environment: RTX3070 8G, cuda 11.3, anaconda
   python 3.8, torch 1.8, should work for RTK 30 series.
-- conda install pytorch torchvision torchaudio cudatoolkit=11.1 -c pytorch-lts -c nvidia
-- conda install -c "nvidia/label/cuda-11.3.0" cuda-nvcc cuda-runtime
-- conda install -c conda-forge trust cub tensorboard
-- set CUDA_HOME to /home/xiang/anaconda3/envs/py38/
+- ```conda install pytorch torchvision torchaudio cudatoolkit=11.1 -c pytorch-lts -c nvidia```
+- ```conda install -c "nvidia/label/cuda-11.3.0" cuda-nvcc cuda-runtime```
+- ```conda install -c conda-forge thrust cub tensorboard```
+- set CUDA_HOME to /home/xiang/anaconda3/envs/py38/, if needed.
 - I also modify the setup.py and roi_sampling.h to meet some recent updates of pytorch.
 
-Main system requirements:
+~~Main system requirements:~~
 
-* CUDA 10.1
-* Linux with GCC 7 or 8
-* PyTorch v1.1.0
+~~* CUDA 10.1~~
+~~* Linux with GCC 7 or 8~~
+~~* PyTorch v1.1.0~~
 
-**IMPORTANT NOTE**: These requirements are not necessarily stringent, e.g. it might be possible to compile with older
+~~**IMPORTANT NOTE**: These requirements are not necessarily stringent, e.g. it might be possible to compile with older
 versions of CUDA, or under Windows. However, we have only tested the code under the above settings and cannot provide
-support for other setups.
+support for other setups.~~
 
-To install PyTorch, please refer to https://github.com/pytorch/pytorch#installation.
+~~To install PyTorch, please refer to https://github.com/pytorch/pytorch#installation.~~
 
 To install all other dependencies using pip:
 
@@ -114,7 +114,7 @@ utility.
 
 **modified by xiang**
 
-Use the following lines to train the network
+Don't cd into the scripts dir. Use the following lines to train the network:
 
 ```bash
 python -m torch.distributed.launch --nproc_per_node=1 ./scripts/train_det_seg_OCID.py --log_dir=./ckpt_files_OCID ./grasp_det_seg/config/defaults/det_seg_OCID.ini ./DATA/OCID_grasp/data_split
