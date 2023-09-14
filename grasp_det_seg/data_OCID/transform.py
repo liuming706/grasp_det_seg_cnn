@@ -77,7 +77,7 @@ class OCIDTransform:
         width = np.sqrt(np.sum((A[:, :, 0] - A[:, :, 1]) ** 2, axis=1))
         height = np.sqrt(np.sum((A[:, :, 1] - A[:, :, 2]) ** 2, axis=1))
 
-        theta = np.zeros((A.shape[0]), dtype=np.int)
+        theta = np.zeros((A.shape[0]), dtype=int)
 
         theta = np.arctan((A[:, 1, 1] - A[:, 1, 0]) / (A[:, 0, 0] - A[:, 0, 1]))
         b = np.arctan((A[:, 1, 0] - A[:, 1, 1]) / (A[:, 0, 1] - A[:, 0, 0]))
@@ -218,7 +218,7 @@ class OCIDTransform:
         msk = np.stack([np.array(m, dtype=np.int32, copy=False) for m in msk], axis=0)
 
         # Convert labels to torch and extract bounding boxes
-        msk = torch.from_numpy(msk.astype(np.long))
+        msk = torch.from_numpy(msk.astype(np.longlong))
 
         bbx = torch.from_numpy(np.asarray(bbox_infos)).contiguous()
         if bbox_infos.shape[1] != 6:

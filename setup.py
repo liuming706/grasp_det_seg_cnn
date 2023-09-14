@@ -75,4 +75,6 @@ setuptools.setup(
     ],
     cmdclass={"build_ext": BuildExtension},
     include_package_data=True,
+    include_dirs=['./include'],
+    zip_safe=False,
 )
