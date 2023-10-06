@@ -27,7 +27,7 @@ If you use our method or dataset extension for your research, please cite:
 ```
 
 ## Requirements and setup
-
+- 参考 cmd_prequired.txt 忽略 xiang 的环境配置
 - **modified by xiang**
   The environment in the original repo seems to be too old for me. My environment: RTX3070 8G, cuda 11.3, anaconda
   python 3.8, torch 1.8, should work for RTK 30 series.

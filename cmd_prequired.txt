@@ -1,0 +1,35 @@
+# 1. 安装 linux 显卡驱动（ ubuntu22.04 + RTX4060 ）
+https://blog.csdn.net/Eric_xkk/article/details/131800365?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522169634166416800184134916%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&request_id=169634166416800184134916&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~hot_rank-4-131800365-null-null.142^v94^insert_down1&utm_term=ubuntu%2022.04%20%E5%AE%89%E8%A3%85RTX4060%E9%A9%B1%E5%8A%A8&spm=1018.2226.3001.4187
+
+# 2. 更换 gcc 版本
+sudo apt install gcc g++ gcc-10 g++10
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 10
+sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 10
+
+# 3. 安装 conda 
+https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/
+
+conda deactivate
+conda remove -n your_env_name(虚拟环境名称) --all
+conda info --envs
+conda create -n py38 python=3.8.8
+conda activate py38
+
+# 4. 配置虚拟环境
+pip 离线安装  pytorch==1.9.0 torchvision==0.10.0 torchaudio==0.9.0 # https://pytorch.org/get-started/locally/
+# 不需要 conda install cudatoolkit=11.5 -c pytorch-lts -c nvidia
+conda install -c "nvidia/label/cuda-11.3.0" cuda-nvcc cuda-runtime
+conda install -c conda-forge thrust cub tensorboard
+pip uninstall setuptools
+pip cache purge
+pip install setuptools==56.1.0
+pip install -U numpy==1.21.1
+# 5. 编译并安装仓库
+pip install -r requirements.txt
+python setup.py install
+
+# 测试命令
+# 训练
+python -m torch.distributed.launch --nproc_per_node=1 ./scripts/train_det_seg_OCID.py --log_dir=./ckpt_files_OCID ./grasp_det_seg/config/defaults/det_seg_OCID.ini ./DATA/OCID_grasp/data_split
+# 测试
+python -m torch.distributed.launch --nproc_per_node=1 ./scripts/test_det_seg_OCID.py --log_dir=./ckpt_files_OCID ./grasp_det_seg/config/defaults/det_seg_OCID.ini ./ckpt_files_OCID/pretrained/model_last.pth.tar ./DATA/OCID_grasp/data_split ./output
